@@ -1,0 +1,1 @@
+// Ví dụ: vocabApi.ts - API liên quan đến từ vựng

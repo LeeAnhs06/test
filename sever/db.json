@@ -1,0 +1,28 @@
+{
+  "users": [
+    {
+      "firstName": "Le",
+      "lastName": "Anh",
+      "email": "admin123@gmail.com",
+      "password": "123123123",
+      "id": 1
+    },
+    {
+      "firstName": "Le",
+      "lastName": "Anh",
+      "email": "admin123@g.com",
+      "password": "123123123",
+      "id": 2
+    },
+    {
+      "firstName": "adasđ",
+      "lastName": "ádasđ",
+      "email": "vanle9540@gmail.com",
+      "password": "123123123",
+      "id": 3
+    }
+  ],
+  "categories": [],
+  "vocabs": [],
+  "results": []
+}

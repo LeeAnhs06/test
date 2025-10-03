@@ -1,0 +1,1 @@
+// Ví dụ: authApi.ts - API liên quan đến xác thực
