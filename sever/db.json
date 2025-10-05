@@ -22,7 +22,13 @@
       "id": 3
     }
   ],
-  "categories": [],
+  "categories": [
+    {
+      "name": "kkfskfsdkf",
+      "description": "ksđfdsfkdskdsf",
+      "id": 1
+    }
+  ],
   "vocabs": [],
   "results": []
 }

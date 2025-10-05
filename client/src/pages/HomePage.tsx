@@ -10,11 +10,29 @@ export default function HomePage() {
   const currentUser = useSelector((state: RootState) => state.auth.currentUser);
 
   const handleLogout = () => {
-  dispatch(logout());
-};
+    dispatch(logout());
+  };
 
   const handleLogin = () => {
     navigate("/login");
+  };
+
+  // Danh sách menu và đường dẫn
+  const navItems = [
+    { name: "Dashboard", path: "/dashboard" },
+    { name: "Categories", path: "/categories" },
+    { name: "Vocabulary", path: "/vocabulary" },
+    { name: "Flashcards", path: "/flashcards" },
+    { name: "Quiz", path: "/quiz" },
+  ];
+
+  const handleNavClick = (path: string) => {
+    // Nếu đã đăng nhập thì điều hướng đúng, chưa thì điều hướng về login
+    if (currentUser) {
+      navigate(path);
+    } else {
+      navigate("/login");
+    }
   };
 
   return (
@@ -23,11 +41,15 @@ export default function HomePage() {
       <header className="bg-white shadow flex items-center justify-between px-10 py-4">
         <div className="font-bold text-xl text-gray-900">VocabApp</div>
         <nav className="flex gap-7 ml-14">
-          <a href="#" className="text-gray-800 text-base font-medium hover:text-blue-600">Dashboard</a>
-          <a href="#" className="text-gray-800 text-base font-medium hover:text-blue-600">Categories</a>
-          <a href="#" className="text-gray-800 text-base font-medium hover:text-blue-600">Vocabulary</a>
-          <a href="#" className="text-gray-800 text-base font-medium hover:text-blue-600">Flashcards</a>
-          <a href="#" className="text-gray-800 text-base font-medium hover:text-blue-600">Quiz</a>
+          {navItems.map(item => (
+            <button
+              key={item.name}
+              className="text-gray-800 text-base font-medium hover:text-blue-600 bg-transparent border-none"
+              onClick={() => handleNavClick(item.path)}
+            >
+              {item.name}
+            </button>
+          ))}
         </nav>
         {!currentUser ? (
           <button
@@ -65,7 +87,6 @@ export default function HomePage() {
         </div>
       </main>
 
-      {/* Footer */}
       <footer className="bg-white py-4 text-center text-gray-700 text-[1rem] shadow">
         © 2024 VocabApp. All rights reserved.
       </footer>
