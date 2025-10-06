@@ -50,12 +50,12 @@ export default function LoginForm() {
           <h2 className="login-title">Login</h2>
           <div className="form-group">
             <label>Email</label>
-            <input {...register("email")} />
+            <input placeholder="Enter your email" {...register("email")} />
             {errors.email && <span className="error">{errors.email.message}</span>}
           </div>
           <div className="form-group">
             <label>Password</label>
-            <input type="password" {...register("password")} />
+            <input type="password" placeholder="Enter your password" {...register("password")} />
             {errors.password && <span className="error">{errors.password.message}</span>}
           </div>
           {error && <div className="error">{error}</div>}

@@ -59,27 +59,27 @@ export default function RegisterForm() {
           <h2 className="register-title">Register</h2>
           <div className="form-group">
             <label>First Name</label>
-            <input {...register("firstName")} />
+            <input placeholder="Enter your first name" {...register("firstName")} />
             {errors.firstName && <span className="error">{errors.firstName.message}</span>}
           </div>
           <div className="form-group">
             <label>Last Name</label>
-            <input {...register("lastName")} />
+            <input placeholder="Enter your last name" {...register("lastName")} />
             {errors.lastName && <span className="error">{errors.lastName.message}</span>}
           </div>
           <div className="form-group">
             <label>Email</label>
-            <input {...register("email")} />
+            <input placeholder="Enter your email" {...register("email")} />
             {errors.email && <span className="error">{errors.email.message}</span>}
           </div>
           <div className="form-group">
             <label>Password</label>
-            <input type="password" {...register("password")} />
+            <input type="password" placeholder="Enter your password" {...register("password")} />
             {errors.password && <span className="error">{errors.password.message}</span>}
           </div>
           <div className="form-group">
             <label>Confirm Password</label>
-            <input type="password" {...register("confirmPassword")} />
+            <input type="password" placeholder="Confirm your password" {...register("confirmPassword")} />
             {errors.confirmPassword && <span className="error">{errors.confirmPassword.message}</span>}
           </div>
           {error && <div className="error">{error}</div>}

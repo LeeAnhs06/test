@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../stores";
 import { logout } from "../slices/authSlice";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 export default function HomePage() {
   const dispatch = useDispatch();
@@ -11,6 +12,12 @@ export default function HomePage() {
 
   const handleLogout = () => {
     dispatch(logout());
+    Swal.fire({
+  icon: "success",
+  title: "Đã đăng xuất tài khoản!",
+  showConfirmButton: false,
+  timer: 1500
+});
   };
 
   const handleLogin = () => {
