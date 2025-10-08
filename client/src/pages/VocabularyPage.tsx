@@ -12,23 +12,21 @@ import { fetchCategories, Category } from "../slices/categoriesSlice";
 import { usePagination } from "../hooks/usePagination";
 import VocabModal from "../components/ui/VocabModal";
 import DeleteVocabModal from "../components/ui/DeleteVocabModal";
+import Header from "../components/common/Header";
 
-export default function VocabManagementPage() {
+export default function VocabularyPage() {
   const dispatch = useDispatch<AppDispatch>();
   const { vocabs, loading } = useSelector((state: RootState) => state.vocab);
   const { categories } = useSelector((state: RootState) => state.categories);
 
-  // Modal state
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedVocab, setSelectedVocab] = useState<Vocab | null>(null);
 
-  // Search/filter state
   const [search, setSearch] = useState("");
-  const [filterCategoryId, setFilterCategoryId] = useState(0); // 0 = All
+  const [filterCategoryId, setFilterCategoryId] = useState(0);
 
-  // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
@@ -41,7 +39,6 @@ export default function VocabManagementPage() {
     setCurrentPage(1);
   }, [search, filterCategoryId]);
 
-  // Filter vocabs
   const filteredVocabs = vocabs.filter(vocab => {
     const matchWord = vocab.word.toLowerCase().includes(search.toLowerCase());
     const matchCategory = filterCategoryId === 0 || vocab.categoryId === filterCategoryId;
@@ -54,30 +51,18 @@ export default function VocabManagementPage() {
     itemsPerPage,
   });
 
-  // Get category name by id
   const getCategoryName = (id: number) =>
     categories.find(cat => cat.id === id)?.name || "";
 
-  // Handlers
-  const handleAdd = () => setShowAddModal(true);
-
-  const handleEdit = (vocab: Vocab) => {
-    setSelectedVocab(vocab);
-    setShowEditModal(true);
-  };
-
-  const handleDelete = (vocab: Vocab) => {
-    setSelectedVocab(vocab);
-    setShowDeleteModal(true);
-  };
-
   return (
+    <>
+    <Header />
     <div className="min-h-screen bg-gray-100 flex flex-col px-[50px]">
       <div className="mt-8 mb-4 flex items-center justify-between">
         <h2 className="text-2xl font-bold text-gray-900">Vocabulary Words</h2>
         <button
           className="bg-green-500 text-white font-medium rounded-md px-6 py-2 shadow hover:bg-green-600 transition"
-          onClick={handleAdd}
+          onClick={() => setShowAddModal(true)}
         >
           Add New Word
         </button>
@@ -85,7 +70,7 @@ export default function VocabManagementPage() {
       {/* Filter + Search */}
       <div className="flex flex-col gap-3 mb-4">
         <select
-          className="w-full rounded border bg-gray-100 px-4 py-2"
+          className="w-full rounded border-1 bg-white px-4 py-2"
           value={filterCategoryId}
           onChange={e => setFilterCategoryId(Number(e.target.value))}
         >
@@ -96,7 +81,7 @@ export default function VocabManagementPage() {
         </select>
         <input
           type="text"
-          className="w-full rounded border bg-gray-100 px-4 py-2"
+          className="w-full rounded border-1 bg-white px-4 py-2"
           placeholder="Search vocabulary..."
           value={search}
           onChange={e => setSearch(e.target.value)}
@@ -135,13 +120,13 @@ export default function VocabManagementPage() {
                   <td className="px-4 py-3 flex gap-4">
                     <button
                       className="text-blue-600 hover:underline font-medium"
-                      onClick={() => handleEdit(vocab)}
+                      onClick={() => { setSelectedVocab(vocab); setShowEditModal(true); }}
                     >
                       Edit
                     </button>
                     <button
                       className="text-red-600 hover:underline font-medium"
-                      onClick={() => handleDelete(vocab)}
+                      onClick={() => { setSelectedVocab(vocab); setShowDeleteModal(true); }}
                     >
                       Delete
                     </button>
@@ -216,5 +201,6 @@ export default function VocabManagementPage() {
         }}
       />
     </div>
+    </>
   );
 }

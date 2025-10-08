@@ -3,7 +3,7 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import HomePage from "./pages/HomePage";
 import CategoriesPage from "./pages/CategoriesPage";
-import VocabManagementPage from "./pages/VocabManagementPage";
+import VocabularyPage from "./pages/VocabularyPage";
 import ProtectedRoute from "./components/common/ProtectedRoute";
 
 function App() {
@@ -19,7 +19,7 @@ function App() {
       } />
       <Route path="/vocabulary" element={
         <ProtectedRoute>
-          <VocabManagementPage />
+          <VocabularyPage />
         </ProtectedRoute>
       } />
     </Routes>

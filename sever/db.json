@@ -24,11 +24,6 @@
   ],
   "categories": [
     {
-      "name": "ư",
-      "description": "ư",
-      "id": 3
-    },
-    {
       "name": "e",
       "description": "e",
       "id": 4
@@ -59,6 +54,13 @@
       "id": 9
     }
   ],
-  "vocabs": [],
+  "vocabs": [
+    {
+      "word": "sdfdsf",
+      "meaning": "dfsdfsdf",
+      "categoryId": 4,
+      "id": 3
+    }
+  ],
   "results": []
 }

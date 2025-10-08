@@ -1,12 +1,13 @@
 import React from "react";
-import { Vocab, Category } from "../../types";
+import { Vocab } from "../../slices/vocabSlice";
+import { Category } from "../../slices/categoriesSlice";
 
 interface Props {
   open: boolean;
   onClose: () => void;
   onSubmit: (data: { word: string; meaning: string; categoryId: number }) => void;
   categories: Category[];
-  initialData?: Vocab; // Nếu sửa thì truyền vào dữ liệu cũ
+  initialData?: Vocab;
 }
 
 export default function VocabModal({ open, onClose, onSubmit, categories, initialData }: Props) {

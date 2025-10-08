@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-// Kiểu dữ liệu
+// Type
 export interface Vocab {
   id: number;
   word: string;
@@ -21,12 +21,12 @@ const initialState: VocabState = {
   error: null,
 };
 
-// GET - lấy tất cả từ vựng
+// Async thunk CRUD
 export const fetchVocabs = createAsyncThunk(
   "vocabs/fetchVocabs",
   async (_, { rejectWithValue }) => {
     try {
-      const { data } = await axios.get<Vocab[]>("http://localhost:8000/vocabulary");
+      const { data } = await axios.get<Vocab[]>("http://localhost:8000/vocabs");
       return data;
     } catch {
       return rejectWithValue("failed to fetch");
@@ -34,12 +34,11 @@ export const fetchVocabs = createAsyncThunk(
   }
 );
 
-// ADD - thêm từ vựng mới
 export const addVocab = createAsyncThunk(
   "vocabs/addVocab",
   async (payload: Omit<Vocab, "id">, { rejectWithValue }) => {
     try {
-      const { data } = await axios.post<Vocab>("http://localhost:8000/vocabulary", payload);
+      const { data } = await axios.post<Vocab>("http://localhost:8000/vocabs", payload);
       return data;
     } catch {
       return rejectWithValue("failed to add");
@@ -47,13 +46,12 @@ export const addVocab = createAsyncThunk(
   }
 );
 
-// UPDATE - cập nhật từ vựng
 export const updateVocab = createAsyncThunk(
   "vocabs/updateVocab",
   async (payload: Vocab, { rejectWithValue }) => {
     try {
       const { id, ...rest } = payload;
-      const { data } = await axios.put<Vocab>(`http://localhost:8000/vocabulary/${id}`, rest);
+      const { data } = await axios.put<Vocab>(`http://localhost:8000/vocabs/${id}`, rest);
       return data;
     } catch {
       return rejectWithValue("failed to update");
@@ -61,12 +59,11 @@ export const updateVocab = createAsyncThunk(
   }
 );
 
-// DELETE - xoá từ vựng
 export const deleteVocab = createAsyncThunk(
   "vocabs/deleteVocab",
   async (id: number, { rejectWithValue }) => {
     try {
-      await axios.delete(`http://localhost:8000/vocabulary/${id}`);
+      await axios.delete(`http://localhost:8000/vocabs/${id}`);
       return id;
     } catch {
       return rejectWithValue("failed to delete");
