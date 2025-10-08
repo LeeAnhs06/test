@@ -14,7 +14,7 @@ export default function HomePage() {
     dispatch(logout());
     Swal.fire({
   icon: "success",
-  title: "Đã đăng xuất tài khoản!",
+  title: "Logged out of the account!",
   showConfirmButton: false,
   timer: 1500
 });

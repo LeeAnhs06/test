@@ -7,6 +7,7 @@ import { AppDispatch, RootState } from "../../stores";
 import { loginUser } from "../../slices/authSlice";
 import { useNavigate } from "react-router-dom";
 import "../../style/LoginForm.css";
+import Swal from "sweetalert2";
 
 type FormData = {
   email: string;
@@ -34,6 +35,12 @@ export default function LoginForm() {
 
   const onSubmit = (data: FormData) => {
     dispatch(loginUser(data));
+            Swal.fire({
+  icon: "success",
+  title: "Logged in to the account!",
+  showConfirmButton: false,
+  timer: 1500
+});
   };
 
   return (

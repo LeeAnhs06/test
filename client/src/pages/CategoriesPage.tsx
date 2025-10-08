@@ -9,29 +9,47 @@ import {
   Category
 } from "../slices/categoriesSlice";
 import { useNavigate } from "react-router-dom";
+import { usePagination } from "../hooks/usePagination";
 
 export default function CategoriesPage() {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const { categories, loading } = useSelector((state: RootState) => state.categories);
 
-  // Modal state
+  // Modal
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
 
-  // Search
+  // Search 
   const [search, setSearch] = useState("");
-  const filteredCategories = categories.filter(cat =>
-    cat.name.toLowerCase().includes(search.toLowerCase())
-  );
+
+  // Pagination 
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   useEffect(() => {
     dispatch(fetchCategories());
   }, [dispatch]);
 
-  // Handlers
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [search]);
+
+  // search
+  const filteredCategories = categories.filter(cat =>
+    cat.name.toLowerCase().includes(search.toLowerCase())
+  );
+
+  // phân trang
+  const { paginatedData, totalPages } = usePagination<Category>({
+    data: filteredCategories,
+    currentPage,
+    itemsPerPage,
+  });
+
+  // Handler mở modal thêm
   const handleAdd = () => {
     setShowAddModal(true);
   };
@@ -50,11 +68,16 @@ export default function CategoriesPage() {
       <header className="bg-white shadow flex items-center justify-between px-10 py-4">
         <div className="font-bold text-xl text-gray-900">VocabApp</div>
         <nav className="flex gap-7 ml-14">
-          <a href="#" className="text-gray-800 text-base font-medium hover:text-blue-600">Dashboard</a>
-          <a href="/categories" className="text-blue-600 text-base font-medium font-bold">Categories</a>
-          <a href="#" className="text-gray-800 text-base font-medium hover:text-blue-600">Vocabulary</a>
-          <a href="#" className="text-gray-800 text-base font-medium hover:text-blue-600">Flashcards</a>
-          <a href="#" className="text-gray-800 text-base font-medium hover:text-blue-600">Quiz</a>
+          <button className="text-gray-800 text-base font-medium hover:text-blue-600"
+            onClick={() => navigate("/dashboard")}>Dashboard</button>
+          <button className="text-blue-600 text-base font-medium font-bold"
+            onClick={() => navigate("/categories")}>Categories</button>
+          <button className="text-gray-800 text-base font-medium hover:text-blue-600"
+            onClick={() => navigate("/vocabulary")}>Vocabulary</button>
+          <button className="text-gray-800 text-base font-medium hover:text-blue-600"
+            onClick={() => navigate("/flashcards")}>Flashcards</button>
+          <button className="text-gray-800 text-base font-medium hover:text-blue-600"
+            onClick={() => navigate("/quiz")}>Quiz</button>
         </nav>
         <button
           className="bg-red-400 text-white font-medium rounded-md px-6 py-2 shadow hover:bg-red-500 transition"
@@ -98,15 +121,15 @@ export default function CategoriesPage() {
                     Loading...
                   </td>
                 </tr>
-              ) : filteredCategories.length === 0 ? (
+              ) : paginatedData.length === 0 ? (
                 <tr>
                   <td colSpan={3} className="px-4 py-6 text-center text-gray-500">
                     No categories found.
                   </td>
                 </tr>
               ) : (
-                filteredCategories.map(cat => (
-                  <tr key={cat.id} className="border-t">
+                paginatedData.map(cat => (
+                  <tr key={cat.id} >
                     <td className="px-4 py-3">{cat.name}</td>
                     <td className="px-4 py-3">{cat.description}</td>
                     <td className="px-4 py-3 flex gap-4">
@@ -129,6 +152,35 @@ export default function CategoriesPage() {
             </tbody>
           </table>
         </div>
+
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <div className="flex justify-center mt-4 gap-2">
+            <button
+              className="px-3 py-1 rounded bg-gray-200 hover:bg-gray-400"
+              onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+              disabled={currentPage === 1}
+            >
+              Prev
+            </button>
+            {Array.from({ length: totalPages }, (_, i) => (
+              <button
+                key={i + 1}
+                className={`px-3 py-1 rounded ${currentPage === i + 1 ? "bg-blue-500 text-white" : "bg-gray-200 hover:bg-gray-400"}`}
+                onClick={() => setCurrentPage(i + 1)}
+              >
+                {i + 1}
+              </button>
+            ))}
+            <button
+              className="px-3 py-1 rounded bg-gray-200 hover:bg-gray-400"
+              onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+              disabled={currentPage === totalPages}
+            >
+              Next
+            </button>
+          </div>
+        )}
       </main>
       <footer className="bg-white py-4 text-center text-gray-700 text-[1rem] shadow mt-auto">
         © 2024 VocabApp. All rights reserved.
@@ -260,7 +312,7 @@ function DeleteCategoryModal({
           ×
         </button>
         <h3 className="text-lg font-semibold mb-4">Delete Category</h3>
-        <p className="mb-6">Are you sure you want to delete category <span className="font-bold">{name}</span>?</p>
+        <p className="mb-6">Are you sure you want to delete this category?</p>
         <div className="flex gap-3 justify-end mt-2">
           <button
             className="px-5 py-2 rounded bg-gray-400 text-white font-medium hover:bg-gray-500"

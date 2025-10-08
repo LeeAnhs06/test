@@ -3,6 +3,7 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import HomePage from "./pages/HomePage";
 import CategoriesPage from "./pages/CategoriesPage";
+import VocabManagementPage from "./pages/VocabManagementPage";
 import ProtectedRoute from "./components/common/ProtectedRoute";
 
 function App() {
@@ -14,6 +15,11 @@ function App() {
       <Route path="/categories" element={
         <ProtectedRoute>
           <CategoriesPage />
+        </ProtectedRoute>
+      } />
+      <Route path="/vocabulary" element={
+        <ProtectedRoute>
+          <VocabManagementPage />
         </ProtectedRoute>
       } />
     </Routes>

@@ -19,7 +19,7 @@ const initialState: CategoriesState = {
   error: null,
 };
 
-// GET categories
+// get 
 export const fetchCategories = createAsyncThunk(
   "categories/fetchCategories",
   async (_, { rejectWithValue }) => {
@@ -27,12 +27,12 @@ export const fetchCategories = createAsyncThunk(
       const { data } = await axios.get<Category[]>("http://localhost:8000/categories");
       return data;
     } catch {
-      return rejectWithValue("Failed to fetch categories");
+      return rejectWithValue("failed to fetch ");
     }
   }
 );
 
-// ADD category
+// add 
 export const addCategory = createAsyncThunk(
   "categories/addCategory",
   async (payload: Omit<Category, "id">, { rejectWithValue }) => {
@@ -40,12 +40,12 @@ export const addCategory = createAsyncThunk(
       const { data } = await axios.post<Category>("http://localhost:8000/categories", payload);
       return data;
     } catch {
-      return rejectWithValue("Failed to add category");
+      return rejectWithValue("failed to add");
     }
   }
 );
 
-// UPDATE category
+// update 
 export const updateCategory = createAsyncThunk(
   "categories/updateCategory",
   async (payload: Category, { rejectWithValue }) => {
@@ -54,12 +54,12 @@ export const updateCategory = createAsyncThunk(
       const { data } = await axios.put<Category>(`http://localhost:8000/categories/${id}`, rest);
       return data;
     } catch {
-      return rejectWithValue("Failed to update category");
+      return rejectWithValue("failed to update");
     }
   }
 );
 
-// DELETE category
+// delete
 export const deleteCategory = createAsyncThunk(
   "categories/deleteCategory",
   async (id: number, { rejectWithValue }) => {
@@ -67,7 +67,7 @@ export const deleteCategory = createAsyncThunk(
       await axios.delete(`http://localhost:8000/categories/${id}`);
       return id;
     } catch {
-      return rejectWithValue("Failed to delete category");
+      return rejectWithValue("failed to delete");
     }
   }
 );
