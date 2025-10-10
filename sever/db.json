@@ -52,15 +52,13 @@
       "name": "su",
       "description": "qưeqwe",
       "id": 9
-    }
-  ],
-  "vocabs": [
+    },
     {
-      "word": "sdfdsf",
-      "meaning": "dfsdfsdf",
-      "categoryId": 4,
-      "id": 3
+      "name": "Xe ",
+      "description": "Xe máy",
+      "id": 10
     }
   ],
+  "vocabs": [],
   "results": []
 }
