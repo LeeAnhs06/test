@@ -227,7 +227,7 @@ export default function CategoriesPage() {
   );
 }
 
-// Modal component for Add/Edit
+// Modal component for Add/Edit (CÓ VALIDATION)
 function CategoryModal({
   onClose,
   onSubmit,
@@ -239,6 +239,23 @@ function CategoryModal({
 }) {
   const [name, setName] = React.useState(data?.name || "");
   const [desc, setDesc] = React.useState(data?.description || "");
+  // Thêm state lỗi
+  const [errorName, setErrorName] = React.useState("");
+
+  // Reset lỗi khi mở modal
+  useEffect(() => {
+    setErrorName("");
+  }, [data, onClose]);
+
+  // Xử lý submit có validate
+  const handleSave = () => {
+    if (!name.trim()) {
+      setErrorName("Name is required");
+      return;
+    }
+    setErrorName("");
+    onSubmit({ name, description: desc });
+  };
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/40 z-50">
@@ -257,10 +274,14 @@ function CategoryModal({
             <label className="block mb-1 text-gray-700 font-medium">Name</label>
             <input
               type="text"
-              className="w-full rounded border px-3 py-2 border-gray-300 focus:outline-none focus:ring focus:border-blue-400"
+              className={`w-full rounded border px-3 py-2 border-gray-300 focus:outline-none focus:ring focus:border-blue-400 ${errorName ? "border-red-400" : ""}`}
               value={name}
               onChange={e => setName(e.target.value)}
             />
+            {/* Hiện lỗi đỏ dưới input */}
+            {errorName && (
+              <span className="text-sm text-red-500 mt-1 block">{errorName}</span>
+            )}
           </div>
           <div>
             <label className="block mb-1 text-gray-700 font-medium">Description</label>
@@ -280,8 +301,7 @@ function CategoryModal({
             </button>
             <button
               className="px-5 py-2 rounded bg-blue-600 text-white font-medium hover:bg-blue-700"
-              onClick={() => onSubmit({ name, description: desc })}
-              disabled={!name.trim()}
+              onClick={handleSave}
             >
               Save
             </button>
@@ -292,7 +312,7 @@ function CategoryModal({
   );
 }
 
-// Modal component for Delete
+// Modal component for Delete (giữ nguyên)
 function DeleteCategoryModal({
   name,
   onClose,

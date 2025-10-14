@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Vocab } from "../../slices/vocabSlice";
 import { Category } from "../../slices/categoriesSlice";
 
@@ -11,17 +11,33 @@ interface Props {
 }
 
 export default function VocabModal({ open, onClose, onSubmit, categories, initialData }: Props) {
-  const [word, setWord] = React.useState(initialData?.word || "");
-  const [meaning, setMeaning] = React.useState(initialData?.meaning || "");
-  const [categoryId, setCategoryId] = React.useState(initialData?.categoryId || categories[0]?.id || 0);
+  const [word, setWord] = useState(initialData?.word || "");
+  const [meaning, setMeaning] = useState(initialData?.meaning || "");
+  const [categoryId, setCategoryId] = useState(initialData?.categoryId || categories[0]?.id || 0);
 
-  React.useEffect(() => {
+  // Thêm state cho lỗi
+  const [errors, setErrors] = useState<{ word?: string; meaning?: string }>({});
+
+  useEffect(() => {
     if (open) {
       setWord(initialData?.word || "");
       setMeaning(initialData?.meaning || "");
       setCategoryId(initialData?.categoryId || categories[0]?.id || 0);
+      setErrors({});
     }
   }, [open, initialData, categories]);
+
+  // Validate trước khi submit
+  const handleSave = () => {
+    const newErrors: { word?: string; meaning?: string } = {};
+    if (!word.trim()) newErrors.word = "Word is required";
+    if (!meaning.trim()) newErrors.meaning = "Meaning is required";
+    setErrors(newErrors);
+
+    if (Object.keys(newErrors).length === 0) {
+      onSubmit({ word, meaning, categoryId });
+    }
+  };
 
   if (!open) return null;
 
@@ -42,19 +58,25 @@ export default function VocabModal({ open, onClose, onSubmit, categories, initia
             <label className="block mb-1 text-gray-700 font-medium">Word</label>
             <input
               type="text"
-              className="w-full rounded border px-3 py-2 border-gray-300 focus:outline-none focus:ring focus:border-blue-400"
+              className={`w-full rounded border px-3 py-2 border-gray-300 focus:outline-none focus:ring focus:border-blue-400 ${errors.word ? "border-red-400" : ""}`}
               value={word}
               onChange={e => setWord(e.target.value)}
             />
+            {errors.word && (
+              <span className="text-sm text-red-500 mt-1 block">{errors.word}</span>
+            )}
           </div>
           <div>
             <label className="block mb-1 text-gray-700 font-medium">Meaning</label>
             <textarea
-              className="w-full rounded border px-3 py-2 border-gray-300 focus:outline-none focus:ring focus:border-blue-400"
+              className={`w-full rounded border px-3 py-2 border-gray-300 focus:outline-none focus:ring focus:border-blue-400 ${errors.meaning ? "border-red-400" : ""}`}
               value={meaning}
               onChange={e => setMeaning(e.target.value)}
               rows={3}
             />
+            {errors.meaning && (
+              <span className="text-sm text-red-500 mt-1 block">{errors.meaning}</span>
+            )}
           </div>
           <div>
             <label className="block mb-1 text-gray-700 font-medium">Category</label>
@@ -77,8 +99,7 @@ export default function VocabModal({ open, onClose, onSubmit, categories, initia
             </button>
             <button
               className="px-5 py-2 rounded bg-blue-600 text-white font-medium hover:bg-blue-700"
-              onClick={() => onSubmit({ word, meaning, categoryId })}
-              disabled={!word.trim() || !meaning.trim()}
+              onClick={handleSave}
             >
               Save
             </button>

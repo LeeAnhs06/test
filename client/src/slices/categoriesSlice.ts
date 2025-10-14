@@ -88,7 +88,7 @@ const categoriesSlice = createSlice({
         state.loading = false; state.error = action.payload as string;
       })
       .addCase(addCategory.fulfilled, (state, action) => {
-        state.categories.push(action.payload);
+        state.categories.unshift(action.payload);
       })
       .addCase(updateCategory.fulfilled, (state, action) => {
         state.categories = state.categories.map(cat =>

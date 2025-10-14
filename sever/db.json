@@ -24,41 +24,88 @@
   ],
   "categories": [
     {
-      "name": "e",
-      "description": "e",
+      "name": "Tiếng Việt",
+      "description": "Chủ đề về Tiếng Việt",
+      "id": 1
+    },
+    {
+      "name": "Tiếng Anh",
+      "description": "Chủ đề về Tiếng Anh",
+      "id": 2
+    },
+    {
+      "name": "Tiếng Pháp",
+      "description": "Chủ đề tiếng Pháp",
+      "id": 3
+    }
+  ],
+  "vocabs": [
+    {
+      "word": "Grass",
+      "meaning": "Cỏ",
+      "categoryId": 2,
+      "id": 1,
+      "isLearned": true
+    },
+    {
+      "word": "Car",
+      "meaning": "Xe",
+      "categoryId": 2,
+      "id": 2
+    },
+    {
+      "word": "House",
+      "meaning": "Nhà",
+      "categoryId": 2,
+      "id": 3
+    },
+    {
+      "word": "Insane",
+      "meaning": "Điên rồ",
+      "categoryId": 2,
       "id": 4
     },
     {
-      "name": "r",
-      "description": "r",
+      "word": "Ăn cháo, đá bát",
+      "meaning": "vô ơn, phản bội người đã giúp đỡ mình.",
+      "categoryId": 1,
       "id": 5
     },
     {
-      "name": "g",
-      "description": "g",
-      "id": 6
+      "word": "Cá lớn nuốt cá bé.",
+      "meaning": "kẻ mạnh áp bức, chèn ép kẻ yếu để giành lợi ích.",
+      "categoryId": 1,
+      "id": 6,
+      "isLearned": true
     },
     {
-      "name": "b",
-      "description": "b",
+      "word": "Khéo ăn thì no, khéo co thì ấm.",
+      "meaning": "biết cách xoay xở, sắp xếp thì sẽ đủ đầy, ấm no dù điều kiện khó khăn.",
+      "categoryId": 1,
       "id": 7
     },
     {
-      "name": "n",
-      "description": "n",
-      "id": 8
-    },
-    {
-      "name": "su",
-      "description": "qưeqwe",
-      "id": 9
-    },
-    {
-      "name": "Xe ",
-      "description": "Xe máy",
-      "id": 10
+      "word": "Đèn nhà ai nhà nấy rạng.",
+      "meaning": "ai lo việc nấy, không can thiệp vào chuyện của người khác.",
+      "categoryId": 1,
+      "id": 8,
+      "isLearned": true
     }
   ],
-  "vocabs": [],
-  "results": []
+  "results": [
+    {
+      "date": "2025-10-12T06:41:13.239Z",
+      "categoryId": 0,
+      "score": 8,
+      "total": 8,
+      "id": 1
+    },
+    {
+      "date": "2025-10-13T01:29:07.033Z",
+      "categoryId": 0,
+      "score": 4,
+      "total": 8,
+      "id": 2
+    }
+  ]
 }

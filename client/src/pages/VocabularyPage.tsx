@@ -70,7 +70,7 @@ export default function VocabularyPage() {
       {/* Filter + Search */}
       <div className="flex flex-col gap-3 mb-4">
         <select
-          className="w-full rounded border-1 bg-white px-4 py-2"
+          className="w-full rounded border border-gray-300 px-4 py-2 focus:outline-none bg-white"
           value={filterCategoryId}
           onChange={e => setFilterCategoryId(Number(e.target.value))}
         >
@@ -81,7 +81,7 @@ export default function VocabularyPage() {
         </select>
         <input
           type="text"
-          className="w-full rounded border-1 bg-white px-4 py-2"
+          className="w-full rounded border border-gray-300 px-4 py-2 focus:outline-none bg-white"
           placeholder="Search vocabulary..."
           value={search}
           onChange={e => setSearch(e.target.value)}

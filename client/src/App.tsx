@@ -4,6 +4,8 @@ import RegisterPage from "./pages/RegisterPage";
 import HomePage from "./pages/HomePage";
 import CategoriesPage from "./pages/CategoriesPage";
 import VocabularyPage from "./pages/VocabularyPage";
+import FlashcardPage from "./pages/FlashcardPage";
+import QuizPage from "./pages/QuizPage";
 import ProtectedRoute from "./components/common/ProtectedRoute";
 
 function App() {
@@ -22,6 +24,16 @@ function App() {
           <VocabularyPage />
         </ProtectedRoute>
       } />
+      <Route path="/flashcards" element={
+        <ProtectedRoute>
+          <FlashcardPage />
+        </ProtectedRoute>
+      } />
+      <Route path="/quiz" element={
+  <ProtectedRoute>
+    <QuizPage />
+  </ProtectedRoute>
+} />
     </Routes>
   );
 }

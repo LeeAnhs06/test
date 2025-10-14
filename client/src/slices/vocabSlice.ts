@@ -7,6 +7,7 @@ export interface Vocab {
   word: string;
   meaning: string;
   categoryId: number;
+  isLearned?: boolean; // THÊM TRƯỜNG NÀY
 }
 
 interface VocabState {
@@ -71,6 +72,19 @@ export const deleteVocab = createAsyncThunk(
   }
 );
 
+// PATCH - đánh dấu đã học
+export const markVocabAsLearned = createAsyncThunk(
+  "vocabs/markVocabAsLearned",
+  async (id: number, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.patch<Vocab>(`http://localhost:8000/vocabs/${id}`, { isLearned: true });
+      return data;
+    } catch {
+      return rejectWithValue("failed to update");
+    }
+  }
+);
+
 const vocabSlice = createSlice({
   name: "vocabs",
   initialState,
@@ -87,7 +101,7 @@ const vocabSlice = createSlice({
         state.loading = false; state.error = action.payload as string;
       })
       .addCase(addVocab.fulfilled, (state, action) => {
-        state.vocabs.push(action.payload);
+        state.vocabs.unshift(action.payload);
       })
       .addCase(updateVocab.fulfilled, (state, action) => {
         state.vocabs = state.vocabs.map(vocab =>
@@ -96,6 +110,12 @@ const vocabSlice = createSlice({
       })
       .addCase(deleteVocab.fulfilled, (state, action) => {
         state.vocabs = state.vocabs.filter(vocab => vocab.id !== action.payload);
+      })
+      // THÊM CASE NÀY
+      .addCase(markVocabAsLearned.fulfilled, (state, action) => {
+        state.vocabs = state.vocabs.map(vocab =>
+          vocab.id === action.payload.id ? action.payload : vocab
+        );
       });
   }
 });
